@@ -2,18 +2,23 @@ const inputBox = document.getElementById("input-box");
 const listContainer = document.getElementById("list-container");
 
 function addTask () {
+
+    const dueDate = document.getElementById("due-date").value;
+
     if(inputBox.value === '') {
         alert('You must write something!');
     }
     else {
         let li = document.createElement("li");
-        li.innerHTML = inputBox.value;
+        li.innerHTML = inputBox.value + (dueDate ? ` (Due: ${dueDate})` : "");
         listContainer.appendChild(li);
         let span = document.createElement("span");
         span.innerHTML = "\u00d7";
         li.appendChild(span);
     }
+
     inputBox.value = "";
+    document.getElementById("due-date").value = "";
     saveData();
 }    
 
@@ -42,7 +47,7 @@ function showTask () {
 
 function removeTasks () {
 
-    if (inputBox.value === "") {
+    if (listContainer.children.length === 0) {
         alert("There are no tasks to be cleared!")
         return;
     }
