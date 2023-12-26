@@ -23,8 +23,12 @@ listContainer.addEventListener("click", function(e) {
         saveData();
     }
     else if (e.target.tagName === "SPAN") {
-        e.target.parentElement.remove();
-        saveData();
+        let confirmation = confirm("Do you really want to remove this task?");
+        
+        if (confirmation) {
+            e.target.parentElement.remove();
+            saveData();
+        }
     }
 }, false);
 
@@ -35,5 +39,21 @@ function saveData () {
 function showTask () {
     listContainer.innerHTML = localStorage.getItem("data");
 }
+
+function removeTasks () {
+
+    if (inputBox.value === "") {
+        alert("There are no tasks to be cleared!")
+        return;
+    }
+
+    let confirmation = confirm("Do you really want to remove all the tasks?");
+
+    if (confirmation) {
+        listContainer.innerHTML = ""
+        saveData();
+    }
+}
+
 
 showTask();
