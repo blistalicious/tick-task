@@ -33,6 +33,7 @@ function addTask() {
     let li = document.createElement("li");
     li.innerHTML = taskText + (dueDate ? ` (Due: ${dueDate})` : "");
     listContainer.appendChild(li);
+    document.getElementById("addSound").play();
 
     let span = document.createElement("span");
     span.innerHTML = "\u00d7";
@@ -53,6 +54,7 @@ listContainer.addEventListener("click", function(e) {
         
         if (confirmation) {
             e.target.parentElement.remove();
+            document.getElementById("deleteSound").play();
             saveData();
         }
     }
