@@ -1,26 +1,47 @@
 const inputBox = document.getElementById("input-box");
 const listContainer = document.getElementById("list-container");
 
-function addTask () {
+function addTask() {
 
     const dueDate = document.getElementById("due-date").value;
+    const taskText = inputBox.value.trim();
+    const maxTasks = 10;
+    const currentTasks = listContainer.getElementsByTagName("li").length;
 
-    if(inputBox.value === '') {
-        alert('You must write something!');
+
+    if (taskText === "") {
+        alert("You must write something!");
+        return;
     }
-    else {
-        let li = document.createElement("li");
-        li.innerHTML = inputBox.value + (dueDate ? ` (Due: ${dueDate})` : "");
-        listContainer.appendChild(li);
-        let span = document.createElement("span");
-        span.innerHTML = "\u00d7";
-        li.appendChild(span);
+
+    const characterLimit = 50;
+
+    if (taskText.length > characterLimit) {
+        alert(
+            "Character limit exceeded! Please keep it within " +
+                characterLimit +
+                " characters."
+        );
+        return;
     }
+
+    if (currentTasks >= maxTasks) {
+        alert("Task limit of 10 reached. You cannot add more tasks.");
+        return;
+    }
+
+    let li = document.createElement("li");
+    li.innerHTML = taskText + (dueDate ? ` (Due: ${dueDate})` : "");
+    listContainer.appendChild(li);
+
+    let span = document.createElement("span");
+    span.innerHTML = "\u00d7";
+    li.appendChild(span);
 
     inputBox.value = "";
     document.getElementById("due-date").value = "";
     saveData();
-}    
+} 
 
 listContainer.addEventListener("click", function(e) {
     if (e.target.tagName === "LI") {
@@ -36,6 +57,12 @@ listContainer.addEventListener("click", function(e) {
         }
     }
 }, false);
+
+inputBox.addEventListener("keypress", function (e) {
+    if (e.key === 'Enter') {
+        addTask();
+    }
+});
 
 function saveData () {
     localStorage.setItem("data", listContainer.innerHTML);
