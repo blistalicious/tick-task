@@ -70,6 +70,7 @@ ul li {
     user-select: none;
     cursor: pointer;
     position: relative;
+    overflow: hidden;
 }
 
 ul li::before {
@@ -104,7 +105,7 @@ ul li span {
     color: #555;
     line-height: 40px;
     text-align: center;
-    border-radius: 50%; 
+    background: white; 
 }
 
 ul li span:hover {
